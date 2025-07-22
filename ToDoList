@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+ import java.util.Scanner;
+
+ public class ToDoListApp {
+
+     public static void main(String[] args) {
+         ArrayList<String> tasks = new ArrayList<>();
+         Scanner scanner = new Scanner(System.in);
+         boolean running = true;
+
+         while (running) {
+             displayMenu();
+             int choice = scanner.nextInt();
+             scanner.nextLine(); // Consume newline
+
+             switch (choice) {
+                 case 1:
+                     addTask(tasks, scanner);
+                     break;
+                 case 2:
+                     viewTasks(tasks);
+                     break;
+                 case 3:
+                     removeTask(tasks, scanner);
+                     break;
+                 case 4:
+                     running = false;
+                     System.out.println("Exiting To-Do List. Goodbye!");
+                     break;
+                 default:
+                     System.out.println("Invalid choice. Please try again.");
+             }
+         }
+         scanner.close();
+     }
+
+     static void displayMenu() {
+         System.out.println("\nTo-Do List Menu:");
+         System.out.println("1. Add Task");
+         System.out.println("2. View Tasks");
+         System.out.println("3. Remove Task");
+         System.out.println("4. Exit");
+         System.out.print("Enter your choice: ");
+     }
+
+     static void addTask(ArrayList<String> tasks, Scanner scanner) {
+         System.out.print("Enter task: ");
+         String task = scanner.nextLine();
+         tasks.add(task);
+         System.out.println("Task added.");
+     }
+
+     static void viewTasks(ArrayList<String> tasks) {
+         if (tasks.isEmpty()) {
+             System.out.println("No tasks in the list.");
+             return;
+         }
+         System.out.println("\nTasks:");
+         for (int i = 0; i < tasks.size(); i++) {
+             System.out.println((i + 1) + ". " + tasks.get(i));
+         }
+     }
+
+     static void removeTask(ArrayList<String> tasks, Scanner scanner) {
+         viewTasks(tasks);
+         if (tasks.isEmpty()) {
+             return;
+         }
+         System.out.print("Enter the number of the task to remove: ");
+         int index = scanner.nextInt();
+         scanner.nextLine(); // Consume newline
+         if (index > 0 && index <= tasks.size()) {
+             tasks.remove(index - 1);
+             System.out.println("Task removed.");
+         } else {
+             System.out.println("Invalid task number.");
+         }
+     }
+}
